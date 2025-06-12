@@ -11,4 +11,6 @@ char line[512];
 while(fgets(line, sizeof(line), file)) {
   // ...
 }
+}
+
 
