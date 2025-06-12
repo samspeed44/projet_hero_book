@@ -29,8 +29,9 @@ int main() {
   
     FILE* file = fopen("book.txt", "r");
 
+    const char* filename = "book.txt";
     if (file == NULL) {
-      printf("Unable to open file <%s>\n", book.txt);
+      printf("Unable to open file <%s>\n", filename);
       exit(EXIT_FAILURE);
     }
 
