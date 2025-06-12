@@ -1,31 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-FILE* file = fopen(book.txt, "r");
-if (file == NULL) {
-  printf("Unable to open file <%s>\n", filename);
-  exit(EXIT_FAILURE);
-}
+#define LINE_SIZE 512
 
-char line[512];
-while(fgets(line, sizeof(line), file)) {
-  int id;
-  char titre[200];
-  sscanf(line,"<chapter id=\"%d\">%s<|chapter>",&id,titre);     
-  // Ligne que je cherche  sscanf(8,"<chapter id=\"%d\">%s<|chapter>"),2,La Forêt de Bois-Perdu);
-  return        
-}
 struct chapitre{ 
-int idChapter;
-char titre[200];
-char content[520];
-char choice1;
-char choice2;
+  int idChapter;
+  char titre[200];
+  char content[520];
+  char choice1;
+  char choice2;
 };
 
 struct Book{
   struct chapitre *chapitre;
-   };
+  };
 
 
 struct Book book_init(){
@@ -47,7 +36,7 @@ struct Book book_init(){
   }
 
   
-} /*
+} */
 
 
 
@@ -59,3 +48,30 @@ struct Book book_init(){
 
 
 
+void PrintChapter(char* line) {
+    int idChapter;
+    char titre[200];
+    if (strstr(line, "<chapter") != NULL) {
+        sscanf(line, "<chapter id=\"%d\">%[^<]s</chapter>", &idChapter, titre);
+        printf("Chapitre ID: %d, Titre: %s\n", idChapter, titre);
+    }
+}
+
+int main() {
+
+  
+    FILE* file = fopen("book.txt", "r");
+
+    if (file == NULL) {
+      printf("Unable to open file <%s>\n", filename);
+      exit(EXIT_FAILURE);
+    }
+
+    char line[LINE_SIZE];
+
+    while (fgets(line, sizeof(line), file)) {
+        PrintChapter(line);
+    }
+
+    fclose(file);
+}
