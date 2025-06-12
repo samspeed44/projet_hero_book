@@ -8,7 +8,7 @@ struct Book book_init(){
     if (newmalloc==NULL){
         exit(1);
     }
-    struct Book B={.chapitre=newmalloc;};
+    struct Book B={.chapitre=newmalloc};
     return B;
 }
 
