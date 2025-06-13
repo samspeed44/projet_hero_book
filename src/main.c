@@ -8,14 +8,14 @@ struct Book book_init(){
     if (newmalloc==NULL){
         exit(1);
     }
-    struct Book B={.chapitres=newmalloc};
-    return B;
+    struct Book book={.chapters=newmalloc};
+    return book;
 }
 
 
-void Book_affiche(struct Book *B){
-  for(int i=1; i<10;i++){
-       if (B->chapter.idChapter==i){
+void Book_affiche(struct Book *book){
+  for(int i=0; i < 10; i++){
+       if (book->chapters[i].idChapter==i+1){
           
            sprintf(filename, "O%d.html", i);
            f = fopen(filename, "w");
@@ -24,9 +24,9 @@ void Book_affiche(struct Book *B){
                 exit(1);
             }
             fprintf(f, "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n");
-            fprintf(f, "<meta charset=\"UTF-8\">\n<title>%s</title>\n</head>\n", B->chapter.titre);
-            fprintf(f, "<body>\n<h1>%s</h1>\n", B->chapter.titre);
-            fprintf(f, "<p>%s</p>\n", B->chapter.content);
+            fprintf(f, "<meta charset=\"UTF-8\">\n<title>%s</title>\n</head>\n", book->chapters.title);
+            fprintf(f, "<body>\n<h1>%s</h1>\n", book->chapters.title);
+            fprintf(f, "<p>%s</p>\n", book->chapters.content);
 
             
             fprintf(f, "</body>\n</html>");

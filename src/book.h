@@ -13,16 +13,16 @@
 // Structure d’un chapitre
 struct chapitre {
     int idChapter;                         // Numéro du chapitre
-    char titre[MAX_TITRE];                // Titre du chapitre
+    char title[MAX_TITRE];                // Titre du chapitre
     char content[MAX_CONTENT];            // Contenu (paragraphes) du chapitre
-    int choix[MAX_CHOIX];                 // Numéros des chapitres suivants (jusqu'à 3)
+    int choices[MAX_CHOIX];                 // Numéros des chapitres suivants (jusqu'à 3)
     char texteChoix[MAX_CHOIX][200];      // Descriptions des choix
-    int nbChoix;                          // Nombre de choix réellement présents (2 ou 3)
+    int nbChoices;                          // Nombre de choix réellement présents (2 ou 3)
 };
 
 // Livre contenant tous les chapitres
 struct Book {
-    struct chapitre chapitres[MAX_CHAPITRES];
+    struct chapitre chapters[MAX_CHAPITRES];
 };
 
 // === Prototypes des Fonctions ===
