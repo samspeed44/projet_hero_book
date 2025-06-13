@@ -38,6 +38,7 @@ int main() {
 
     while (fgets(line, sizeof(line), file)) {
         PrintChapter(line);
+        get_paragraph(line);
     }
 
     fclose(file);
