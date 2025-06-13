@@ -1,9 +1,11 @@
 #include "book.h"
-void PrintChapter(char* line) {
-    int idChapter;
+
+void get_title(char* line) {
+    int id;
     char titre[200];
     if (strstr(line, "<chapter") != NULL) {
-        sscanf(line, "<chapter id=\"%d\">%[^<]s</chapter>", &idChapter, titre);
-        printf("Chapitre ID: %d, Titre: %s\n", idChapter, titre);
+        if (sscanf(line, "<chapter id=\"%d\">%199[^<]</chapter>", &id, titre) == 2) {
+            printf("Titre : %s\n", titre);
+        }
     }
 }
