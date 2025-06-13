@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define LINE_SIZE     512
 #define MAX_TITRE     200
 #define MAX_CONTENT   1024
 #define MAX_CHAPITRES 10
@@ -29,9 +30,9 @@ struct Book {
 struct Book book_init(); // Initialise le livre
 
 // Fonctions d'extraction ligne par ligne
-void get_title(char* line);
-void get_chapter(char* line);
-void get_paragraph(char* line);
+char get_title(char* line);
+int get_chapter(char* line);
+char* get_paragraph(char* line);
 void get_choice(char* line);
 
 void PrintChapter(char* line);  // Fonction de test

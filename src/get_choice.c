@@ -1,9 +1,18 @@
 #include "book.h"
-void PrintChapter(char* line) {
-    int idChapter;
-    char titre[200];
-    if (strstr(line, "<chapter") != NULL) {
-        sscanf(line, "<chapter id=\"%d\">%[^<]s</chapter>", &idChapter, titre);
-        printf("Chapitre ID: %d, Titre: %s\n", idChapter, titre);
+
+int* get_choice(char* line, int* nbChoix) {
+    int* tab = malloc(sizeof(int) * 3);
+    *nbChoix = 0;
+
+    int idchoice;
+    char description[300];
+
+    // On analyse si la ligne contient un choix
+    if (strstr(line, "<choice") != NULL) {
+        if (sscanf(line, "<choice idref=\"%d\">%199[^<]", &idchoice, description) == 2) {
+            tab[(*nbChoix)++] = idchoice;
+        }
     }
+
+    return tab;
 }
