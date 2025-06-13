@@ -13,16 +13,27 @@ struct Book book_init(){
 }
 
 
-/*void Book_affiche(struct Book *B){
-  for(int i=0; i<11;i++){}
-  if (B->chapter.idChapter==1){
-    fopen("O1.html","w")
-    fprintf("<h1>",B->chapter.titre;"</h1>")
-    fprint("<p>",B->chapter.content,"</p>")
-  }
+void Book_affiche(struct Book *B){
+  for(int i=1; i<10;i++){
+       if (B->chapter.idChapter==i){
+          
+           sprintf(filename, "O%d.html", i);
+           f = fopen(filename, "w");
+           if (f == NULL) {
+                printf("Erreur d'ouverture du fichier %s\n", filename);
+                exit(1);
+            }
+            fprintf(f, "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n");
+            fprintf(f, "<meta charset=\"UTF-8\">\n<title>%s</title>\n</head>\n", B->chapter.titre);
+            fprintf(f, "<body>\n<h1>%s</h1>\n", B->chapter.titre);
+            fprintf(f, "<p>%s</p>\n", B->chapter.content);
 
-  
-} */
+            
+            fprintf(f, "</body>\n</html>");
+            fclose(f);
+        } 
+    } 
+} 
 
 int main() {
 
