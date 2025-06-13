@@ -12,7 +12,7 @@
 #define MAX_CHOIX     3  // Adapté pour accueillir jusqu'à 3 choix par chapitre
 
 // Structure d’un chapitre
-struct chapitre {
+struct Chapitre {
     int idChapter;                         // Numéro du chapitre
     char title[MAX_TITRE];                // Titre du chapitre
     char content[MAX_CONTENT];            // Contenu (paragraphes) du chapitre
