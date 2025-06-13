@@ -13,7 +13,7 @@ struct Book book_init(){
 }
 
 void book_add(struct Book *book){
- book->chapitres[0].idChapter=get_chapter();
+ book->chapters[0].idChapter=get_chapter();
  
      
  
@@ -23,7 +23,7 @@ void book_add(struct Book *book){
 
 
 
-   
+}
 
 int main() {
 
