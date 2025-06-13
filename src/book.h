@@ -9,15 +9,15 @@
 #define MAX_TITRE     200
 #define MAX_CONTENT   1024
 #define MAX_CHAPITRES 10
-#define MAX_CHOIX     3  // Adapté pour accueillir jusqu'à 3 choix par chapitre
+#define MAX_CHOIX     3
 
 // Structure d’un chapitre
 struct Chapitre {
-    int idChapter;                         // Numéro du chapitre
-    char title[MAX_TITRE];                // Titre du chapitre
-    char content[MAX_CONTENT];            // Contenu (paragraphes) du chapitre
+    int idChapter;                          // Numéro du chapitre
+    char title[MAX_TITRE];                  // Titre du chapitre
+    char content[MAX_CONTENT];              // Contenu (paragraphes) du chapitre
     int choices[MAX_CHOIX];                 // Numéros des chapitres suivants (jusqu'à 3)
-    char texteChoix[MAX_CHOIX][200];      // Descriptions des choix
+    char texteChoix[MAX_CHOIX][200];        // Descriptions des choix
     int nbChoices;                          // Nombre de choix réellement présents (2 ou 3)
 };
 
@@ -30,10 +30,12 @@ struct Book {
 struct Book book_init(); // Initialise le livre
 
 // Fonctions d'extraction ligne par ligne
-char get_title(char* line);
+char* get_title(char* line);
 int get_chapter(char* line);
 char* get_paragraph(char* line);
-void get_choice(char* line);
+int* get_choice(char* line, int* nbChoix);
+char** get_choice_text(char* line, int* nbChoix);
+void remplir_chapitre(struct Chapitre* chapitre, char* line); // remplit la structure chapitre
 
 void PrintChapter(char* line);  // Fonction de test
 
