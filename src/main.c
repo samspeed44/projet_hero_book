@@ -14,6 +14,16 @@ struct Book book_init(){
 
 void book_add(struct Book *book){
  book->chapters[0].idChapter=get_chapter();
+ 
+ 
+     
+ 
+
+
+
+
+
+
 }
 
 int main() {
