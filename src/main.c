@@ -12,28 +12,18 @@ struct Book book_init(){
     return book;
 }
 
+void book_add(struct Book *book){
+ book->chapitres[0].idChapter=get_chapter();
+ 
+     
+ 
 
-void Book_affiche(struct Book *book){
-  for(int i=0; i < 10; i++){
-       if (book->chapters[i].idChapter==i+1){
-          
-           sprintf(filename, "O%d.html", i);
-           f = fopen(filename, "w");
-           if (f == NULL) {
-                printf("Erreur d'ouverture du fichier %s\n", filename);
-                exit(1);
-            }
-            fprintf(f, "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n");
-            fprintf(f, "<meta charset=\"UTF-8\">\n<title>%s</title>\n</head>\n", book->chapters.title);
-            fprintf(f, "<body>\n<h1>%s</h1>\n", book->chapters.title);
-            fprintf(f, "<p>%s</p>\n", book->chapters.content);
 
-            
-            fprintf(f, "</body>\n</html>");
-            fclose(f);
-        } 
-    } 
-} 
+
+
+
+
+   
 
 int main() {
 
