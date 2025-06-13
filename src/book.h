@@ -23,7 +23,7 @@ struct Chapitre {
 
 // Livre contenant tous les chapitres
 struct Book {
-    struct chapitre chapters[MAX_CHAPITRES];
+    struct Chapitre chapters[MAX_CHAPITRES];
 };
 
 // === Prototypes des Fonctions ===

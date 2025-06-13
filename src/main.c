@@ -4,7 +4,7 @@
 
 
 struct Book book_init(){
-    struct chapitre *newmalloc=(10*sizeof(struct chapitre));
+    struct chapitre *newmalloc=(10*sizeof(struct Chapitre));
     if (newmalloc==NULL){
         exit(1);
     }
@@ -12,16 +12,6 @@ struct Book book_init(){
     return book;
 }
 
-void book_add(struct Book *book){
- book->chapters[0].idChapter=get_chapter();
-
- 
-     
- 
-
-
-
-}
 
 int main() {
 
