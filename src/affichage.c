@@ -2,7 +2,7 @@
 
 void Book_affiche(struct Book *book){
   for(int i=0; i < 10; i++){
-    struct chapitre *chap = &livre->chapitres[i];
+    struct Chapitre *chap = &livre->chapitres[i];
 
         // Nom de fichier : 01.html, 02.html, ...
         sprintf(filename, "%02d.html", chap->idChapter);
