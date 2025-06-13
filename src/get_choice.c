@@ -16,3 +16,21 @@ int* get_choice(char* line, int* nbChoix) {
 
     return tab;
 }
+
+char** get_choice_text(char* line, int* nbChoix) {
+    char** tab = malloc(sizeof(char*) * 3);  
+    *nbChoix = 0;
+
+    int id;
+    char description[300]; // le texte du choix
+
+    if (strstr(line, "<choice") != NULL) {
+        if (sscanf(line, "<choice idref=\"%d\">%299[^<]", &id, description) == 2) {
+            // Alloue dynamiquement une chaîne pour stocker le texte du choix
+            tab[*nbChoix] = malloc(strlen(description) + 1);
+            strcpy(tab[*nbChoix], description); // Copie le texte extrait dans le tableau
+            (*nbChoix)++;
+        }
+    }
+
+    return tab;
