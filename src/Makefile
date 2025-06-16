@@ -1,8 +1,8 @@
 # Nom de l'exécutable
-EXEC = htmlgen
+EXEC = htmlgeneration
 
 # Fichiers sources
-SRC = main.c get_chapter.c
+SRC = main.c get_chapter.c affichage.c
 
 # Commande de compilation
 $(EXEC): $(SRC)

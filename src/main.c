@@ -50,15 +50,8 @@ int main() {
 
     fclose(file);
 
-    // Affichage de vérification
-    for (int i = 0; i <= chapitreIndex; i++) {
-        struct Chapitre* ch = &monLivre.chapters[i];
-        printf("\nChapitre %d : %s\n", ch->idChapter, ch->title);
-        printf("Contenu :\n%s\n", ch->content);
-        for (int j = 0; j < ch->nbChoices; j++) {
-            printf("Choix %d -> Chapitre %d : %s\n", j + 1, ch->choices[j], ch->texteChoix[j]);
-        }
-    }
+    // Appelle la fonction pour générer les fichiers HTML
+    affichage(&monLivre);
 
     return 0;
-} 
+}
