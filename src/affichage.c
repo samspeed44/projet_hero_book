@@ -25,7 +25,6 @@ void affichage(struct Book *livre) {
         fprintf(f, "</head>\n<body>\n");
         fprintf(f, "<h1>%s</h1>\n", chap.title);
 
-
         // Découpe du contenu par paragraphe (\n)
         char contenu[MAX_CONTENT];
         strcpy(contenu, chap.content);
@@ -36,10 +35,27 @@ void affichage(struct Book *livre) {
             ligne = strtok(NULL, "\n");
         }
 
-        // Ajout des choix avec liens
+        // Ajout des choix
         for (int j = 0; j < chap.nbChoices; j++) {
-            fprintf(f, "<p>%s <a href=\"%02d.html\">Chapitre %d</a></p>\n",
-                chap.texteChoix[j], chap.choices[j], chap.choices[j]);
+            // Extraire l'index du chapitre cible
+            int idCible = chap.choices[j];
+
+            // Nettoyer le texte du choix pour supprimer la balise <a> incluse
+            char texteNettoye[256];
+            char *pos = strstr(chap.texteChoix[j], "<a>");
+            if (pos != NULL) {
+                // Copier jusqu'à la balise <a>
+                size_t len = pos - chap.texteChoix[j];
+                strncpy(texteNettoye, chap.texteChoix[j], len);
+                texteNettoye[len] = '\0';
+            } else {
+                // Aucun lien trouvé, on prend tout
+                strcpy(texteNettoye, chap.texteChoix[j]);
+            }
+
+            // Écrire le choix avec lien propre
+            fprintf(f, "<p>%s<a href=\"%02d.html\">Chapitre %d</a></p>\n",
+                    texteNettoye, idCible, idCible);
         }
 
         fprintf(f, "</body>\n</html>");
