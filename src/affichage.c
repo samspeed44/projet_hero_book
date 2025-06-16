@@ -2,12 +2,12 @@
 #include <stdio.h>
 #include <string.h>
 
-void affichage(Book livre) {
+void affichage(struct Book *livre) {
     char filename[20];
     FILE *f;
 
     for (int i = 0; i < 10; i++) {
-        Chapitre chap = livre.chapitres[i];
+        struct Chapitre chap = livre->chapters[i];
 
         // Créer le nom de fichier (ex : "01.html")
         sprintf(filename, "%02d.html", chap.idChapter);
@@ -20,8 +20,8 @@ void affichage(Book livre) {
 
         // Début HTML
         fprintf(f, "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n<meta charset=\"UTF-8\">\n");
-        fprintf(f, "<title>%s</title>\n</head>\n<body>\n", chap.titre);
-        fprintf(f, "<h1>%s</h1>\n", chap.titre);
+        fprintf(f, "<title>%s</title>\n</head>\n<body>\n", chap.title);
+        fprintf(f, "<h1>%s</h1>\n", chap.title);
 
         // Découpe du contenu par paragraphe (\n)
         char contenu[MAX_CONTENT];
@@ -34,9 +34,9 @@ void affichage(Book livre) {
         }
 
         // Ajout des choix avec liens
-        for (int j = 0; j < chap.nbChoix; j++) {
+        for (int j = 0; j < chap.nbChoices; j++) {
             fprintf(f, "<p>%s <a href=\"%02d.html\">Chapitre %d</a></p>\n",
-                chap.texteChoix[j], chap.choix[j], chap.choix[j]);
+                chap.texteChoix[j], chap.choices[j], chap.choices[j]);
         }
 
         fprintf(f, "</body>\n</html>");
