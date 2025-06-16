@@ -1,4 +1,4 @@
-#include "book.h"
+#include "livre.h"
 
 // Fonction pour initialiser un chapitre
 struct Chapitre chapitre_init() {

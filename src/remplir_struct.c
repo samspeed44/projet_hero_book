@@ -1,4 +1,4 @@
-#include "book.h"
+#include "livre.h"
 
 
 // get_chapter : Extrait le numéro du chapitre depuis une balise <chapter>
