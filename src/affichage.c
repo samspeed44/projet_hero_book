@@ -2,15 +2,15 @@
 #include <stdio.h>
 #include <string.h>
 
-void affichage(struct Book *livre) {
+void affichage(struct Livre *livre) {
     char filename[30];
     FILE *f;
 
     for (int i = 0; i < 10; i++) {
-        struct Chapitre chap = livre->chapters[i];
+        struct Chapitre chap = livre->chapitres[i];
 
         // Créer le nom du fichier HTML : "01.html", "02.html", ...
-        sprintf(filename, "../histoire/%02d.html", chap.idChapter);
+        sprintf(filename, "../histoire/%02d.html", chap.idChapitre);
         f = fopen(filename, "w");
 
         if (!f) {
@@ -20,14 +20,14 @@ void affichage(struct Book *livre) {
 
         // En-tête HTML
         fprintf(f, "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n<meta charset=\"UTF-8\">\n");
-        fprintf(f, "<title>%s</title>\n", chap.title);
+        fprintf(f, "<title>%s</title>\n", chap.titre);
         fprintf(f, "<link rel=\"stylesheet\" href=\"style.css\">\n");
         fprintf(f, "</head>\n<body>\n");
-        fprintf(f, "<h1>%s</h1>\n", chap.title);
+        fprintf(f, "<h1>%s</h1>\n", chap.titre);
 
         // Paragraphes
         char contenu[MAX_CONTENT];
-        strcpy(contenu, chap.content);
+        strcpy(contenu, chap.contenu);
         char *ligne = strtok(contenu, "\n");
         while (ligne != NULL) {
             fprintf(f, "<p>%s</p>\n", ligne);
@@ -35,8 +35,8 @@ void affichage(struct Book *livre) {
         }
 
         // Choix (plusieurs liens)
-        for (int j = 0; j < chap.nbChoices; j++) {
-            int cible = chap.choices[j];
+        for (int j = 0; j < chap.nbChoix; j++) {
+            int cible = chap.choix[j];
 
             // Nettoyer texteChoix (enlever <a> si présent)
             char texte[256];

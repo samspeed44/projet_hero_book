@@ -1,30 +1,30 @@
 #include "book.h"
 
 // Fonction pour initialiser un chapitre
-struct Chapitre chapter_init() {
+struct Chapitre chapitre_init() {
     struct Chapitre chap;
-    chap.idChapter = -1;
-    chap.nbChoices = 0;
-    chap.title[0] = '\0';
-    chap.content[0] = '\0';
+    chap.idChapitre = -1;
+    chap.nbChoix = 0;
+    chap.titre[0] = '\0';
+    chap.contenu[0] = '\0';
     for (int i = 0; i < MAX_CHOIX; i++) {
-        chap.choices[i] = -1;
+        chap.choix[i] = -1;
         chap.texteChoix[i][0] = '\0';
     }
     return chap;
 }
 
 // Fonction pour initialiser un livre
-struct Book book_init() {
-    struct Book livre;
+struct Livre livre_init() {
+    struct Livre livre;
     for (int i = 0; i < MAX_CHAPITRES; i++) {
-        livre.chapters[i] = chapter_init();
+        livre.chapitres[i] = chapitre_init();
     }
     return livre;
 }
 
 int main() {
-    struct Book monLivre = book_init();
+    struct Livre monLivre = livre_init();
     char line[LINE_SIZE];
     int chapitreIndex = -1;
 
@@ -39,12 +39,12 @@ int main() {
         if (strstr(line, "<chapter") != NULL) {
             chapitreIndex++;
             if (chapitreIndex < MAX_CHAPITRES) {
-                monLivre.chapters[chapitreIndex] = chapter_init();
+                monLivre.chapitres[chapitreIndex] = chapitre_init();
             }
         }
 
         if (chapitreIndex >= 0 && chapitreIndex < MAX_CHAPITRES) {
-            remplir_chapitre(&monLivre.chapters[chapitreIndex], line);
+            remplir_chapitre(&monLivre.chapitres[chapitreIndex], line);
         }
     }
 

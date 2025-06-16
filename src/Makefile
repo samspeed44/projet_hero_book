@@ -1,5 +1,5 @@
 html:
-	gcc -o temp_exec main.c get_chapter.c affichage.c
+	gcc -o temp_exec main.c remplir_struct.c affichage.c
 	./temp_exec
 	rm -f temp_exec
 
