@@ -39,9 +39,6 @@ char* get_paragraph(char* line) {
 }
 
 
-
-
-
 // remplir_chapitre : Remplit une structure Chapitre ligne par ligne
 void remplir_chapitre(struct Chapitre* chapitre, char* line) {
     if (strstr(line, "<chapter") != NULL) {
@@ -61,20 +58,22 @@ void remplir_chapitre(struct Chapitre* chapitre, char* line) {
             free(para);
         }
     }
-    else if (strstr(line, "<choice") != NULL) {
-        if (chapitre->nbChoices < MAX_CHOIX) {
-            int id = -1;
-            char texte[LINE_SIZE];
+    else if (strstr(line, "<choice") != NULL && chapitre->nbChoices < MAX_CHOIX) {
+        int id = -1;
+        char texte[LINE_SIZE];
 
-            if (sscanf(line, "<choice idref=\"%d\">%511[^<]", &id, texte) == 2) {
-                chapitre->choices[chapitre->nbChoices] = id;
-                strncpy(chapitre->texteChoix[chapitre->nbChoices], texte, LINE_SIZE - 1);
-                chapitre->texteChoix[chapitre->nbChoices][LINE_SIZE - 1] = '\0';
-                chapitre->nbChoices++;
-            }
+        // On extrait le idref et le texte jusqu'à <a>
+        if (sscanf(line, "<choice idref=\"%d\">%511[^<]", &id, texte) == 2) {
+            chapitre->choices[chapitre->nbChoices] = id;
+            strncpy(chapitre->texteChoix[chapitre->nbChoices], texte, 199);
+            chapitre->texteChoix[chapitre->nbChoices][199] = '\0';
+            chapitre->nbChoices++;
         }
     }
 }
+
+
+
 
 
 
