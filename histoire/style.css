@@ -1,0 +1,47 @@
+
+/* Police et arrière-plan */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Georgia', serif;
+  background-color: #1f1f1f;
+  color: #f1f1f1;
+  line-height: 1.6;
+  padding: 2rem;
+  background-image: url('https://www.transparenttextures.com/patterns/dark-mosaic.png'); /* texture subtile */
+}
+
+/* Titre Chapitre */
+h1 {
+  font-size: 3em;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #ffcc00;
+  text-shadow: 2px 2px 5px #000;
+  border-bottom: 2px solid #444;
+  padding-bottom: 0.5rem;
+}
+
+/* Paragraphe */
+p {
+  max-width: 800px;
+  margin: 0 auto 1.5rem auto;
+  font-size: 1.2em;
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 1rem;
+  border-left: 4px solid #ffcc00;
+  border-radius: 6px;
+}
+
+/* Lien */
+a {
+  color: #ffcc00;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
