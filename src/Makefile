@@ -1,21 +1,10 @@
-# Nom de l'exécutable
-EXEC = htmlgeneration
+html:
+	gcc -o temp_exec main.c get_chapter.c affichage.c
+	./temp_exec
+	rm -f temp_exec
 
-# Fichiers sources
-SRC = main.c get_chapter.c affichage.c
-
-# Commande de compilation
-$(EXEC): $(SRC)
-	gcc -o $(EXEC) $(SRC)
-
-# Exécute le programme pour générer les .html
-run: $(EXEC)
-	./$(EXEC)
-
-# Nettoie l'exécutable
-clean:
-	rm -f $(EXEC)
-
-# Supprime les fichiers HTML générés
 clean-html:
-	rm -f *.html
+	rm -f ../histoire/*.html
+
+clean:
+	rm -f temp_exec

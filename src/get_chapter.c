@@ -1,17 +1,15 @@
 #include "book.h"
 
-/*
- * get_chapter : Extrait le numéro du chapitre depuis une balise <chapter>
- */
+
+// get_chapter : Extrait le numéro du chapitre depuis une balise <chapter>
 int get_chapter(char* line) {
     int id = -1;
     sscanf(line, "<chapter id=\"%d\">", &id);
     return id;
 }
 
-/*
- * get_title : Alloue dynamiquement et retourne le titre extrait d'une balise <chapter>
- */
+
+// get_title : Alloue dynamiquement et retourne le titre extrait d'une balise <chapter>
 char* get_title(char* line) {
     int id;
     char buffer[MAX_TITRE];
@@ -25,9 +23,9 @@ char* get_title(char* line) {
     return NULL;
 }
 
-/*
- * get_paragraph : Alloue dynamiquement le contenu d'un paragraphe <p>...</p>
- */
+
+// get_paragraph : Alloue dynamiquement le contenu d'un paragraphe <p>...</p>
+
 char* get_paragraph(char* line) {
     char buffer[LINE_SIZE];
     if (sscanf(line, "<p>%511[^<]", buffer) == 1) {
@@ -40,9 +38,8 @@ char* get_paragraph(char* line) {
     return NULL;
 }
 
-/*
- * get_choice : Retourne un tableau dynamique contenant les idref d'une ligne <choice>
- */
+
+// get_choice : Retourne un tableau dynamique contenant les idref d'une ligne <choice>
 int* get_choice(char* line, int* nbChoix) {
     int* tab = malloc(sizeof(int) * MAX_CHOIX);
     *nbChoix = 0;
@@ -57,9 +54,9 @@ int* get_choice(char* line, int* nbChoix) {
     return tab;
 }
 
-/*
- * get_choice_text : Retourne un tableau dynamique contenant les textes visibles des choix
- */
+
+// get_choice_text : Retourne un tableau dynamique contenant les textes visibles des choix
+
 char** get_choice_text(char* line, int* nbChoix) {
     char** tab = malloc(sizeof(char*) * MAX_CHOIX);
     *nbChoix = 0;
@@ -78,9 +75,8 @@ char** get_choice_text(char* line, int* nbChoix) {
     return tab;
 }
 
-/*
- * remplir_chapitre : Remplit une structure Chapitre ligne par ligne
- */
+
+// remplir_chapitre : Remplit une structure Chapitre ligne par ligne
 void remplir_chapitre(struct Chapitre* chapitre, char* line) {
     // Si c'est un début de chapitre, extraire id et titre
     if (strstr(line, "<chapter") != NULL) {
@@ -103,19 +99,16 @@ void remplir_chapitre(struct Chapitre* chapitre, char* line) {
     }
     // Si c'est un choix, ajouter id et texte au tableau de choix
     else if (strstr(line, "<choice") != NULL) {
-        int nb = 0;
-        int* ids = get_choice(line, &nb);
-        char** textes = get_choice_text(line, &nb);
+        if (chapitre->nbChoices < MAX_CHOIX) {
+            int id = -1;
+            char texte[LINE_SIZE];
 
-        if (nb > 0 && chapitre->nbChoices < MAX_CHOIX) {
-            chapitre->choices[chapitre->nbChoices] = ids[0];
-            strncpy(chapitre->texteChoix[chapitre->nbChoices], textes[0], LINE_SIZE - 1);
-            chapitre->texteChoix[chapitre->nbChoices][LINE_SIZE - 1] = '\0';
-            chapitre->nbChoices++;
+            if (sscanf(line, "<choice idref=\"%d\">%511[^<]", &id, texte) == 2) {
+                chapitre->choices[chapitre->nbChoices] = id;
+                strncpy(chapitre->texteChoix[chapitre->nbChoices], texte, LINE_SIZE - 1);
+                chapitre->texteChoix[chapitre->nbChoices][LINE_SIZE - 1] = '\0';
+                chapitre->nbChoices++;
+            }
         }
-
-        free(ids);
-        free(textes[0]);
-        free(textes);
     }
 }
