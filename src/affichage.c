@@ -20,8 +20,11 @@ void affichage(struct Book *livre) {
 
         // Début HTML
         fprintf(f, "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n<meta charset=\"UTF-8\">\n");
-        fprintf(f, "<title>%s</title>\n</head>\n<body>\n", chap.title);
+        fprintf(f, "<title>%s</title>\n", chap.title);
+        fprintf(f, "<link rel=\"stylesheet\" href=\"style.css\">\n");  
+        fprintf(f, "</head>\n<body>\n");
         fprintf(f, "<h1>%s</h1>\n", chap.title);
+
 
         // Découpe du contenu par paragraphe (\n)
         char contenu[MAX_CONTENT];
