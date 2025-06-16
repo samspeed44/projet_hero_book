@@ -10,7 +10,7 @@ void affichage(struct Book *livre) {
         struct Chapitre chap = livre->chapters[i];
 
         // Créer le nom de fichier (ex : "01.html")
-        sprintf(filename, "%02d.html", chap.idChapter);
+        sprintf(filename, "../histoire/%02d.html", chap.idChapter);
         f = fopen(filename, "w");
 
         if (!f) {
