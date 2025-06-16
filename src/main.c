@@ -50,12 +50,6 @@ int main() {
 
     fclose(file);
 
-    //TEST
-    for (int i = 0; i < 10; i++) {
-    printf("Chapitre %d : %d choix\n", monLivre.chapters[i].idChapter, monLivre.chapters[i].nbChoices);
-    }
-    //FIN TEST
-
     // Appelle la fonction pour générer les fichiers HTML
     affichage(&monLivre);
 
