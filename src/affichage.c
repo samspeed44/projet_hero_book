@@ -14,7 +14,7 @@ void affichage(struct Book *livre) {
         f = fopen(filename, "w");
 
         if (!f) {
-            printf("❌ Erreur ouverture fichier %s\n", filename);
+            printf("Erreur ouverture fichier %s\n", filename);
             continue;
         }
 
@@ -42,6 +42,6 @@ void affichage(struct Book *livre) {
         fprintf(f, "</body>\n</html>");
         fclose(f);
 
-        printf("✅ %s généré.\n", filename);
+        printf("%s généré.\n", filename);
     }
 }
