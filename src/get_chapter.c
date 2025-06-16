@@ -1,8 +1,4 @@
-// get_chapter.c
 #include "book.h"
-#include <string.h>
-#include <stdlib.h>
-#include <stdio.h>
 
 /*
  * get_chapter : Extrait le numéro du chapitre depuis une balise <chapter>
