@@ -37,6 +37,8 @@ int* get_choice(char* line, int* nbChoix);
 char** get_choice_text(char* line, int* nbChoix);
 void remplir_chapitre(struct Chapitre* chapitre, char* line); // remplit la structure chapitre
 
-void PrintChapter(char* line);  // Fonction de test
+// Fonctions d'initialisation de structure
+struct Chapitre chapter_init();
+struct Book book_init();
 
-#endif // BOOK_H
+#endif
