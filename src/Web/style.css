@@ -44,3 +44,37 @@ a:hover {
   color: #ffffff;
   text-decoration: underline;
 }
+
+/*Pour le black jack */
+#blackjack {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #1150ff;
+  font-family: 'Georgia', serif;
+  text-align: center;
+}
+
+#blackjack h2 {
+  margin-bottom: 20px;
+}
+
+#blackjack button {
+  margin: 10px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+#log {
+  white-space: pre-wrap;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+#result {
+  margin-top: 15px;
+  font-size: 1.2rem;
+}
