@@ -1,102 +1,142 @@
-document.addEventListener("DOMContentLoaded", () => {
-  // Création dynamique de toute la page
-  document.body.innerHTML = `
-    <h1>Défi : Gagnez au Black Jack pour continuer l'histoire</h1>
-    <p>Pour accéder au chapitre suivant, vous devez battre le croupier.</p>
-    <button id="startBtn">Jouer</button>
-    <div id="controls" style="display:none;">
-      <button id="tirerBtn">Tirer une carte</button>
-      <button id="resterBtn">Rester</button>
-    </div>
-    <div id="log" style="white-space: pre-wrap; background: #f0f0f0; padding: 10px; margin-top: 10px;">Cliquez sur "Jouer" pour commencer.</div>
-    <div id="next" style="margin-top: 20px;"></div>
-  `;
+// Lance le jeu une fois que le DOM est chargé
+document.addEventListener("DOMContentLoaded", startBlackjack);
 
-  let deck = [], playerHand = [], dealerHand = [], gameOver = false;
+// Liste des chapitres dans lesquels le jeu de blackjack doit apparaître ici c'est le chapitre 3
+const chapitresAvecJeu = [3]; 
 
-  function createDeck() {
-    const suits = ['♠', '♥', '♦', '♣'];
-    const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
-    let d = [];
-    for (let s of suits) {
-      for (let v of values) d.push({ value: v, suit: s });
-    }
-    return d.sort(() => Math.random() - 0.5);
-  }
+// Tire une carte entre 1 et 10 
+function drawCard() {
+    return Math.floor(Math.random() * 10) + 1;
+}
 
-  function getValue(card) {
-    if (['K', 'Q', 'J'].includes(card.value)) return 10;
-    if (card.value === 'A') return 11;
-    return parseInt(card.value);
-  }
+// Calcule le total d'une main (somme des cartes)
+function total(hand) {
+    return hand.reduce((a, b) => a + b, 0);
+}
 
-  function handValue(hand) {
-    let value = hand.reduce((sum, c) => sum + getValue(c), 0);
-    let aces = hand.filter(c => c.value === 'A').length;
-    while (value > 21 && aces--) value -= 10;
-    return value;
-  }
+// Mains du joueur et du croupier
+let player = [], dealer = [], gameOver = false;
 
-  function display() {
+// Fonction principale appelée au chargement de la page
+function startBlackjack() {
+    // Récupère le numéro de la page actuelle à partir de l'URL (ex : 03.html → 3)
+    const currentPage = parseInt(window.location.pathname.match(/(\d+)\.html$/)[1]);
+
+    // Si la page ne fait pas partie des chapitres concernés, ne rien faire
+    if (!chapitresAvecJeu.includes(currentPage)) return;
+
+    // Bloque l'accès aux liens tant que le jeu n'est pas gagné
+    blockLinks();
+
+    // Crée l'interface HTML du jeu
+    const container = document.createElement("div");
+    container.id = "blackjack";
+    container.innerHTML = `
+        <h2>Gagner contre le croupier pour changer de page</h2>
+        <div id="log"></div>
+        <div id="controls">
+            <button onclick="hit()">Tirer une carte</button>
+            <button onclick="stand()">Rester</button>
+        </div>
+        <div id="result"></div>
+    `;
+    document.body.appendChild(container);
+
+    // Démarre une nouvelle partie
+    initGame();
+}
+
+// Désactive tous les liens HTML menant aux chapitres
+function blockLinks() {
+    const links = document.querySelectorAll("a[href$='.html']");
+    links.forEach(link => {
+        link.dataset.originalHref = link.href; // Sauvegarde l'URL originale
+        link.removeAttribute("href");          // Désactive le lien
+        link.style.pointerEvents = "none";     // Désactive les clics
+        link.style.opacity = "0.5";            // Visuellement grisé
+    });
+}
+
+// Réactive les liens (appelé après une victoire)
+function unlockLinks() {
+    const links = document.querySelectorAll("a[data-original-href]");
+    links.forEach(link => {
+        link.href = link.dataset.originalHref; // Restaure l'URL originale
+        link.style.pointerEvents = "auto";     // Réactive le clic
+        link.style.opacity = "1";              // Restaure l'apparence normale
+    });
+}
+
+// Initialise les mains du joueur et du croupier
+function initGame() {
+    player = [drawCard(), drawCard()]; // Deux cartes pour le joueur
+    dealer = [drawCard(), drawCard()]; // Deux cartes pour le croupier
+    gameOver = false;                  // Réinitialise l'état du jeu
+    updateLog();                       // Affiche les mains
+
+    // Réinitialise les boutons de jeu
+    document.getElementById("result").innerHTML = "";
+    const controls = document.getElementById("controls");
+    controls.innerHTML = `
+        <button onclick="hit()">Tirer une carte</button>
+        <button onclick="stand()">Rester</button>
+    `;
+}
+
+// Affiche les cartes actuelles du joueur et du croupier
+function updateLog() {
     const log = document.getElementById("log");
-    const playerVal = handValue(playerHand);
-    const dealerVal = handValue(dealerHand);
-    log.innerText = 
-      `Vos cartes : ${playerHand.map(c => c.value + c.suit).join(', ')} (${playerVal})\n` +
-      `Croupier : ${dealerHand.map(c => c.value + c.suit).join(', ')} (${dealerVal})`;
-  }
+    log.innerText = `Vos cartes : ${player.join(", ")} (total: ${total(player)})\n` +
+                    `Cartes du dealer : ${dealer.join(", ")} (total: ${total(dealer)})`;
+}
 
-  function tirer() {
-    if (gameOver) return;
-    playerHand.push(deck.pop());
-    display();
-    if (handValue(playerHand) > 21) {
-      endGame(false, "Vous avez dépassé 21. Défaite !");
+// Action : le joueur tire une carte
+function hit() {
+    if (gameOver) return;                 // Si le jeu est fini, ne rien faire
+    player.push(drawCard());              // Ajoute une carte
+    updateLog();                          // Met à jour l'affichage
+    if (total(player) > 21) {             // Si le joueur dépasse 21
+        endGame(false, "Vous avez dépassé 21. Vous perdez.");
     }
-  }
+}
 
-  function rester() {
+// Action : le joueur reste, c'est au tour du croupier
+function stand() {
     if (gameOver) return;
-    while (handValue(dealerHand) < 17) {
-      dealerHand.push(deck.pop());
+
+    // Le croupier tire jusqu'à atteindre au moins 17
+    while (total(dealer) < 17) {
+        dealer.push(drawCard());
     }
-    display();
-    const p = handValue(playerHand);
-    const d = handValue(dealerHand);
+
+    updateLog();
+
+    // Compare les scores
+    const p = total(player), d = total(dealer);
     if (d > 21 || p > d) {
-      endGame(true, "Bravo ! Vous avez gagné !");
-    } else if (p === d) {
-      endGame(false, "Égalité. Réessayez.");
+        endGame(true, "Vous avez gagné !");
     } else {
-      endGame(false, "Le croupier a gagné. Vous avez perdu.");
+        endGame(false, "Vous avez perdu.");
     }
-  }
+}
 
-  function endGame(win, message) {
+// Fin de la partie
+function endGame(win, message) {
     gameOver = true;
-    const log = document.getElementById("log");
-    const next = document.getElementById("next");
-    log.innerText += "\n" + message;
+    document.getElementById("result").innerText = message;
+
+    const controls = document.getElementById("controls");
+
     if (win) {
-      next.innerHTML = `<a href="05.html">👉 Continuer vers le chapitre suivant</a>`;
+        unlockLinks(); // Le joueur peut continuer
+        controls.innerHTML = "<p style='color:green;'>Vous pouvez continuer l'histoire !</p>";
     } else {
-      next.innerHTML = `<p style="color:red;">Vous ne pouvez pas continuer. Essayez encore.</p>`;
+        // Bouton pour rejouer si le joueur perd
+        controls.innerHTML += `
+            <br><button onclick="initGame()">Rejouer</button>
+        `;
     }
-    document.getElementById("controls").style.display = "none";
-  }
+}
 
-  function startGame() {
-    deck = createDeck();
-    playerHand = [deck.pop(), deck.pop()];
-    dealerHand = [deck.pop(), deck.pop()];
-    gameOver = false;
-    document.getElementById("next").innerHTML = "";
-    display();
-    document.getElementById("controls").style.display = "block";
-  }
 
-  // Événements
-  document.getElementById("startBtn").onclick = startGame;
-  document.getElementById("tirerBtn").onclick = tirer;
-  document.getElementById("resterBtn").onclick = rester;
-});
+
