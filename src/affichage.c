@@ -22,7 +22,7 @@ void affichage(struct Livre *livre) {
         fprintf(f, "<!DOCTYPE html>\n<html lang=\"fr\">\n<head>\n<meta charset=\"UTF-8\">\n");
         fprintf(f, "<title>%s</title>\n", chap.titre);
         fprintf(f, "<link rel=\"stylesheet\" href=\"../src/Web/style.css\">\n"); // style css
-        fprintf(f, "<script src=\"combat.js\"></script>"); // script javascript combat
+        fprintf(f, "<script src=\"../src/Web/combat.js\"></script>"); // script javascript combat
         fprintf(f, "</head>\n<body>\n");
         fprintf(f, "<h1>%s</h1>\n", chap.titre);
 
