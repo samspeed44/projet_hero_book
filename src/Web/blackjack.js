@@ -50,14 +50,14 @@ function startBlackjack() {
 function blockLinks() {
     const links = document.querySelectorAll("a[href$='.html']");
     links.forEach(link => {
-        // Sauvegarde l'URL originale
-        link.dataset.originalHref = link.href;
-        // Désactive le lien 
-        link.removeAttribute("href");  
-        // Désactive les clics       
-        link.style.pointerEvents = "none"; 
-        // Visuellement grisé    
-        link.style.opacity = "0.5";            
+        
+        link.dataset.originalHref = link.href; // Sauvegarde l'URL originale
+        
+        link.removeAttribute("href");  // Désactive le lien 
+            
+        link.style.pointerEvents = "none";  // Désactive les clics  
+         
+        link.style.opacity = "0.5";  // Visuellement grisé            
     });
 }
 
@@ -73,6 +73,7 @@ function unlockLinks() {
 
 // Initialise les mains du joueur et du croupier
 function initGame() {
+     // Deux cartes pour le joueur
     player = [drawCard(), drawCard()]; // Deux cartes pour le joueur
     dealer = [drawCard(), drawCard()]; // Deux cartes pour le croupier
     gameOver = false;                  // Réinitialise l'état du jeu
@@ -96,14 +97,14 @@ function updateLog() {
 
 // Action : le joueur tire une carte
 function hit() {
-    // Si le jeu est fini, ne rien faire
-    if (gameOver) return;    
-    // Ajoute une carte              
-    player.push(drawCard()); 
-    // Met à jour l'affichage            
-    updateLog();
-    // Si le joueur dépasse 21                         
-    if (total(player) > 21) {            
+   
+    if (gameOver) return;   // Si le jeu est fini, ne rien faire   
+               
+    player.push(drawCard());  // Ajoute une carte  
+              
+    updateLog(); // Met à jour l'affichage 
+                            
+    if (total(player) > 21) { // Si le joueur dépasse 21             
         endGame(false, "Vous avez dépassé 21. Vous perdez.");
     }
 }
