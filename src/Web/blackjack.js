@@ -1,7 +1,7 @@
 // Lance le jeu une fois que le DOM est chargé
 document.addEventListener("DOMContentLoaded", startBlackjack);
 
-// Liste des chapitres dans lesquels le jeu de blackjack doit apparaître ici c'est le chapitre 3
+// Liste les chapitres ou le jeu doit apparaitre
 const chapitresAvecJeu = [3]; 
 
 // Tire une carte entre 1 et 10 
@@ -9,7 +9,7 @@ function drawCard() {
     return Math.floor(Math.random() * 10) + 1;
 }
 
-// Calcule le total d'une main (somme des cartes)
+// Calcule le total d'une main 
 function total(hand) {
     return hand.reduce((a, b) => a + b, 0);
 }
@@ -50,10 +50,14 @@ function startBlackjack() {
 function blockLinks() {
     const links = document.querySelectorAll("a[href$='.html']");
     links.forEach(link => {
-        link.dataset.originalHref = link.href; // Sauvegarde l'URL originale
-        link.removeAttribute("href");          // Désactive le lien
-        link.style.pointerEvents = "none";     // Désactive les clics
-        link.style.opacity = "0.5";            // Visuellement grisé
+        // Sauvegarde l'URL originale
+        link.dataset.originalHref = link.href;
+        // Désactive le lien 
+        link.removeAttribute("href");  
+        // Désactive les clics       
+        link.style.pointerEvents = "none"; 
+        // Visuellement grisé    
+        link.style.opacity = "0.5";            
     });
 }
 
@@ -92,10 +96,14 @@ function updateLog() {
 
 // Action : le joueur tire une carte
 function hit() {
-    if (gameOver) return;                 // Si le jeu est fini, ne rien faire
-    player.push(drawCard());              // Ajoute une carte
-    updateLog();                          // Met à jour l'affichage
-    if (total(player) > 21) {             // Si le joueur dépasse 21
+    // Si le jeu est fini, ne rien faire
+    if (gameOver) return;    
+    // Ajoute une carte              
+    player.push(drawCard()); 
+    // Met à jour l'affichage            
+    updateLog();
+    // Si le joueur dépasse 21                         
+    if (total(player) > 21) {            
         endGame(false, "Vous avez dépassé 21. Vous perdez.");
     }
 }
@@ -128,8 +136,9 @@ function endGame(win, message) {
     const controls = document.getElementById("controls");
 
     if (win) {
-        unlockLinks(); // Le joueur peut continuer
-        controls.innerHTML = "<p style='color:green;'>Vous pouvez continuer l'histoire !</p>";
+        // Le joueur peut continuer
+        unlockLinks(); 
+        controls.innerHTML = "<p style='color:white;'>Vous pouvez continuer l'histoire !</p>";
     } else {
         // Bouton pour rejouer si le joueur perd
         controls.innerHTML += `
