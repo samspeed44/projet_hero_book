@@ -40,9 +40,4 @@ char* obtenir_titre(char* line);
 char* obtenir_paragraph(char* line);
 void remplir_chapitre(struct Chapitre* chapitre, char* line); // remplit la structure chapitre
 
-// Anciennes fonctions
-//int* obtenir_choix(char* line, int* nbChoix);
-//char** obtenir_choix_texte(char* line, int* nbChoix);
-
-
 #endif
